@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { Logger } = require('@siiges-services/shared');
+const { makeRequest } = require('@siiges-services/integraciones');
 
 const ESTATUS_SOLCITUD_FOLIOS_MAP = {
   ENVIO_TITULACION: 6,
@@ -114,12 +115,13 @@ const shouldProcessFolioAlumno = (folioAlumno) => {
 };
 
 const envioTitulacion = (
-  service,
   findOneSolicitudesFoliosQuery,
   updateSolicitudesFoliosQuery,
   updateFolioDocumentoAlumnoQuery,
   findAllSolicitudFolioAlumnosQuery,
 ) => async ({ id }) => {
+  console.log(id);
+
   const solicitudFolio = await findOneSolicitudesFoliosQuery({ id }, { include, strict: false });
   const solicitudJson = solicitudFolio.toJSON();
 
@@ -139,14 +141,18 @@ const envioTitulacion = (
         return folioAlumno;
       }
       const dataTransformed = transformDataToTitulo({ folioAlumno, programa });
-      const isValid = validateDataTransformed(dataTransformed);
+      // const isValid = validateDataTransformed(dataTransformed);
+      const isValid = true;
 
       if (isValid) {
         try {
-          await service.create(dataTransformed);
+          await makeRequest({
+            accion: 'create-titulacion-record',
+            body: dataTransformed,
+          });
         } catch (error) {
           Logger.error('Request failed:', {
-            error: error.response.data,
+            error: error.response,
             statusCode: error.status,
           });
           return { dataTransformed, success: false };

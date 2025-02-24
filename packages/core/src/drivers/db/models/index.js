@@ -132,6 +132,7 @@ const { DimensionServicioSocial, DimensionServicioSocialSchema } = require('./di
 const { SectorServicioSocial, SectorServicioSocialSchema } = require('./sectorServicioSocial');
 const { ModalidadServicioSocial, ModalidadServicioSocialSchema } = require('./modalidadServicioSocial');
 const { EstatusSolicitudServicioSocial, EstatusSolicitudServicioSocialSchema } = require('./estatusSolicitudServicioSocial');
+const { ConfiguracionIntegracion, ConfiguracionIntegracionSchema } = require('./configuracionIntegracion');
 
 // Siiges 1.0
 const { Academia, AcademiaSchema } = require('./academias');
@@ -359,6 +360,10 @@ function setupModels(sequelize) {
   TipoAlumnoBeca.init(TipoAlumnoBecaSchema, TipoAlumnoBeca.config(sequelize));
   EstatusAlumnoBeca.init(EstatusAlumnoBecaSchema, EstatusAlumnoBeca.config(sequelize));
   EstatusSolicitudBeca.init(EstatusSolicitudBecaSchema, EstatusSolicitudBeca.config(sequelize));
+  ConfiguracionIntegracion.init(
+    ConfiguracionIntegracionSchema,
+    ConfiguracionIntegracion.config(sequelize),
+  );
 
   // Siiges 1.0
   Academia.init(AcademiaSchema, Academia.config(sequelize));
@@ -548,6 +553,7 @@ function setupModels(sequelize) {
   TipoAlumnoBeca.associate(sequelize.models);
   EstatusAlumnoBeca.associate(sequelize.models);
   EstatusSolicitudBeca.associate(sequelize.models);
+  ConfiguracionIntegracion.associate(sequelize.models);
 
   // Siiges 1.0
   Academia.associate(sequelize.models);

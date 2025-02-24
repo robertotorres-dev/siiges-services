@@ -1,6 +1,8 @@
 const config = require('../../../config/config');
 
 const { mysql } = config;
+console.log(mysql);
+
 const {
   dbHost, dbPort, dbUser, dbPassword, dbName, dbAdmin,
 } = mysql;
